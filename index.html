@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Chickmath | Computer Engineering Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Aditya Chickmath</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#goals">Career Goals</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <img src="headshot.jpg" alt="Aditya Chickmath" class="profile-pic">
+            <h1>Aditya B. Chickmath</h1>
+            <p class="tagline">Computer Engineering Student | Hardware Security Researcher | FPGA/Embedded Systems Focus</p>
+            <p class="intro">Welcome to my portfolio. I'm a sophomore at Georgia Tech specializing in embedded systems security, digital design, and low-level systems programming. Currently conducting binary analysis research in the Cyber-Physical Systems Security Lab while building hands-on hardware experience through projects and coursework.</p>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm Aditya Chickmath, a Computer Engineering student at Georgia Tech pursuing threads in Systems and Architecture and Computing Hardware and Emerging Architectures. My career focus is at the intersection of hardware design and security, working on FPGA development, embedded systems, and processor architectures.</p>
+                    
+                    <p>I got into this field through video games. I spent my high school years trying to figure out why my PC could run some games smoothly and others not at all, which led me down a rabbit hole of CPU architectures, GPU pipelines, and eventually building my own systems. That curiosity about how hardware actually works at the lowest levels is what brought me to Georgia Tech.</p>
+                    
+                    <p>Currently, I'm a research assistant in Professor Saman Zonouz's Cyber-Physical Systems Security Lab, where I conduct binary similarity analysis on embedded firmware using Ghidra. This work involves analyzing compiled binaries at the assembly level to detect malicious code modifications in drone control systems. I'm also a Peer Instructor at The Hive Makerspace, where I help students with circuit design, microcontroller programming, and electronics prototyping.</p>
+                    
+                    <p>My technical interests span digital design with SystemVerilog and VHDL, embedded systems programming in C and Assembly, and hardware security. I've worked on projects ranging from building a custom RISC-V processor core to developing an adaptive game controller using IMU sensors and ESP32 microcontrollers.</p>
+                    
+                    <p>I completed a software engineering internship at Rolls-Royce, where I built data visualization tools and automation scripts using Python, Vue.js, and PostgreSQL. While that work was more software-focused, it taught me valuable skills in full-stack development and working on large-scale enterprise systems. This summer I'll be interning at Salesforce (Slack) in San Francisco, working on their infrastructure team.</p>
+                    
+                    <p>My goal is to work in FPGA engineering, hardware verification, or chip design at companies like AMD, Intel, or Nvidia. I'm particularly interested in roles that combine hardware design with security, such as developing secure processor architectures or firmware verification systems.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://www.gatech.edu/sites/default/files/styles/large/public/images/tech-tower-fall.jpg" alt="Georgia Tech Campus">
+                    <p class="image-credit">Source: Georgia Tech</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2>Technical Projects</h2>
+            
+            <div class="project-card featured">
+                <h3>OmniBlade - Adaptive Motion Controller</h3>
+                <p class="project-meta">Discovery Project | March 2026 | Best in Thread - Embedded Devices</p>
+                
+                <div class="project-content">
+                    <div class="project-description">
+                        <h4>Overview</h4>
+                        <p>OmniBlade is an adaptive game controller that uses arm motion instead of traditional buttons and joysticks. Built for players with limb differences, tremors, or limited hand mobility, it turns natural arm gestures into game inputs. Tilt your arm to move, flick your wrist to attack. No buttons, no setup, just motion.</p>
+                        
+                        <h4>The Problem</h4>
+                        <p>Accessibility controllers exist, but they all assume you can use your fingers. The Xbox Adaptive Controller remaps buttons to bigger buttons. Eye trackers need cameras and calibration. Switch access devices require mounting hardware and more setup time than actual gameplay. Every solution adds complexity while still requiring fine motor control in the hands.</p>
+                        
+                        <p>For players with limb differences or limited hand mobility, the problem was never which button to press — it's that buttons were never designed for them in the first place. OmniBlade eliminates buttons entirely. If you have an arm, you can play.</p>
+                        
+                        <h4>Technical Implementation</h4>
+                        <p>The system uses two ESP32 DEVKIT V1 microcontrollers, each paired with an MPU-6050 6-axis IMU, mounted in custom 3D-printed forearm housings with velcro straps — one per arm. Each ESP32 reads sensor data over I2C at 50Hz and runs a complementary filter to fuse accelerometer and gyroscope readings into stable roll and pitch angles.</p>
+                        
+                        <p>The complementary filter balances both sensors — trusting the gyroscope for fast motion and the accelerometer for slow corrections. This prevents the drift you'd get from using just the gyro and the noise you'd get from just the accelerometer. Flick gestures are detected by monitoring gyroscope spike thresholds with cooldown logic to prevent false triggers.</p>
+                        
+                        <p>Both ESP32s stream data over USB serial to a Python host application. A multithreaded script reads both serial ports simultaneously and maps left arm tilt to the left analog stick and right arm tilt to the right analog stick via vgamepad, a virtual Xbox controller library. Flick gestures map to face buttons and triggers. Voice commands via VoiceAttack handle supplemental inputs including start, select, d-pad, and stick clicks — fully replacing all remaining controller inputs without any physical buttons.</p>
+                        
+                        <p>The result is complete Xbox controller emulation driven entirely by arm motion and voice. Because it emulates a standard controller, it works out of the box with any game without remapping or custom profiles.</p>
+                        
+                        <h4>Results</h4>
+                        <p>OmniBlade won Best in Thread for Embedded Devices at the Innovate ECE Thread Challenge at Georgia Tech. The system was demonstrated across Elden Ring, Forza Horizon 5, and Devil May Cry 5 — including a live boss kill in Elden Ring using only motion controls. A separate analog trigger profile was developed for Forza, mapping right arm tilt forward to throttle and back to brake for proportional acceleration and braking.</p>
+                        
+                        <p>The biggest technical challenge was per-arm calibration and threshold tuning. Each arm has a different natural range of motion, requiring independent deadzone and max angle values for left and right stick normalization. Getting stable orientation from noisy IMU data while keeping latency low enough for real-time gameplay required extensive iteration.</p>
+                        
+                        <h4>What I Learned</h4>
+                        <p>This project taught me I2C communication and sensor fusion on embedded hardware, complementary filtering for IMU orientation estimation, multithreaded serial parsing in Python, and virtual input simulation on Windows and Linux via vgamepad. I also learned how to design gesture vocabularies around physical constraints — mapping a full Xbox controller to eight flick directions, two analog tilt axes, and voice forced hard decisions about which inputs actually matter and which could be deprioritized.</p>
+                        
+                        <h4>Future Development</h4>
+                        <p>The current build is a working prototype but not yet a product. Next steps include implementing a Madgwick filter for better orientation accuracy under fast motion, upgrading to an IMU with a magnetometer for stable yaw, and eventually designing a custom PCB to miniaturize the system into a wrist-mounted form factor closer to a wearable device. The goal is a controller that is as easy to put on as a watch and requires no setup — expressive enough to handle any game, for any player.</p>
+                        
+                        <p><strong>Tech Stack:</strong> ESP32, MPU-6050 IMU, Python, USB Serial, Complementary Filter, vgamepad, pynput, VoiceAttack, Multithreaded Serial Parsing</p>
+                        
+                        <p><strong>Repository:</strong> <a href="https://github.com/achickmath/OmniBlade" target="_blank">github.com/achickmath/OmniBlade</a></p>
+                        
+                        <p><strong>Award:</strong> Best in Thread - Embedded Devices, Innovate ECE Thread Challenge, Georgia Tech</p>
+                    </div>
+                    
+                    <div class="project-images">
+                        <img src="omniblade1.jpg" alt="OmniBlade hardware - ESP32 and MPU-6050 IMU on breadboard">
+                        <img src="omniblade2.jpg" alt="OmniBlade dual-arm enclosures with 3D-printed housings">
+                        <img src="omniblade3.jpg" alt="OmniBlade system with both arms powered on">
+                        <img src="omniblade4.jpg" alt="Live gameplay demonstration using OmniBlade motion controls">
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>LTC2308 ADC Peripheral</h3>
+                    <p class="project-meta">FPGA Design Project | March 2026 - April 2026</p>
+                    <p>Designed a memory-mapped VHDL peripheral integrating the LTC2308 ADC into a 16-bit processor I/O bus over SPI, supporting 8 selectable analog input channels with full clock generation, bit serialization, and chip select timing. Architected a 2-register MMIO interface abstracting all SPI protocol complexity from software, mirroring real-world hardware peripheral driver design. Implemented on-demand conversion triggering with a packed status-and-result read register, enabling efficient single-instruction polling. Validated SPI timing integrity and analog data accuracy across all channels using ModelSim simulation, FPGA hardware testing, and logic analyzer verification.</p>
+                    <img src="https://www.analog.com/-/media/images/products/landing-pages/technology-pages/adc/analog-to-digital-converters-lp-slide-1-1920x1080.jpg" alt="ADC Architecture" class="project-img">
+                    <p class="image-credit">Source: Analog Devices</p>
+                </div>
+
+                <div class="project-card">
+                    <h3>Game Boy Emulator</h3>
+                    <p class="project-meta">Systems Programming Project | Ongoing</p>
+                    <p>Building a cycle-accurate Game Boy emulator in C to understand low-level system architecture. Implementing CPU instruction decode and execution for the Sharp LR35902 processor, memory management unit with ROM/RAM banking, and PPU for tile-based graphics rendering. Working on timing accuracy to match original hardware behavior and debugging with test ROMs. This project has deepened my understanding of computer architecture, memory-mapped I/O, and hardware emulation.</p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Game-Boy-FL.jpg/1200px-Game-Boy-FL.jpg" alt="Game Boy Hardware" class="project-img">
+                    <p class="image-credit">Source: Wikimedia Commons</p>
+                </div>
+
+                <div class="project-card">
+                    <h3>SentinelCV</h3>
+                    <p class="project-meta">HackGT 11 Winner | September 2024</p>
+                    <p>First place winner in the Magical Midway track for most innovative use of Computer Vision/AR/VR. Built a computer vision system to monitor patient movements and prevent pressure ulcers in hospitals. Used Google MediaPipe with OpenCV for real-time patient detection from video feeds and integrated the CV model with RESTful APIs to display processed feeds on a Flask frontend.</p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/OpenCV_Logo_with_text_svg_version.svg/1200px-OpenCV_Logo_with_text_svg_version.svg.png" alt="OpenCV Logo" class="project-img">
+                    <p class="image-credit">Source: Wikimedia Commons</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="goals" class="goals">
+        <div class="container">
+            <h2>Career Goals</h2>
+            
+            <div class="goals-content">
+                <div class="goal-section">
+                    <h3>5-Year Goals</h3>
+                    <p>Work as an FPGA engineer or hardware verification engineer at a semiconductor company like AMD, Intel, Nvidia, or Qualcomm. I want to focus on digital design and embedded systems security, contributing to processor architecture development or hardware security implementations. This means becoming proficient in RTL design, verification methodologies, and understanding chip design workflows from specification to tapeout.</p>
+                </div>
+
+                <div class="goal-section">
+                    <h3>10-Year Goals</h3>
+                    <p>Transition into research and development leadership in industry or academia, working on next-generation processor architectures and hardware security. This could mean leading a hardware security team at a semiconductor company or pursuing a PhD to focus on novel processor architectures and cyber-physical systems security. The goal is to contribute to fundamental innovations in how we design secure, efficient computing systems.</p>
+                </div>
+
+                <div class="goal-section">
+                    <h3>How My Education Supports These Goals</h3>
+                    <p>My thread choices directly align with these goals. Systems and Architecture gives me the foundation in computer architecture, embedded systems, and hardware-software integration needed for FPGA and verification work. Computing Hardware and Emerging Architectures focuses on digital design, VLSI, and novel processor architectures, which applies directly to chip design and hardware innovation.</p>
+                    
+                    <p>My coursework in Digital Design Lab (ECE 2031), Circuit Analysis (ECE 2040), and Cybersecurity of Drones (ECE 4803) builds the technical foundation. My research in the Cyber-Physical Systems Security Lab develops low-level systems programming and security analysis skills. Working as a Peer Instructor at The Hive Makerspace keeps my hands-on hardware skills sharp.</p>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Path Forward</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>Year 2 (Sophomore)</h4>
+                            <p><strong>Academic:</strong> Focus on Algorithms (CS 3510), Digital Design Lab, and Circuit Analysis. Continue Cybersecurity of Drones course and research work in CPSec lab.</p>
+                            <p><strong>Professional:</strong> Complete software engineering internship at Salesforce (Slack) in San Francisco, working on infrastructure. Build research portfolio in binary analysis and firmware security. Continue peer instruction role.</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <h4>Year 3 (Junior)</h4>
+                            <p><strong>Academic:</strong> Take advanced courses in computer architecture, VLSI design, and embedded systems. Consider adding verification coursework.</p>
+                            <p><strong>Professional:</strong> Secure summer internship at semiconductor company (AMD, Intel, Nvidia) in FPGA design or verification. Present research findings at undergraduate symposium.</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <h4>Year 4 (Senior)</h4>
+                            <p><strong>Academic:</strong> Complete senior design project in digital systems or hardware security. Maintain strong GPA for graduate school applications if pursuing PhD route.</p>
+                            <p><strong>Professional:</strong> Convert internship to full-time offer or apply to hardware engineering roles. Decide between industry and graduate school based on research experience and career interests.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Skills Development</h3>
+                    <p>To reach these goals, I'm focusing on:</p>
+                    <ul>
+                        <li>RTL design proficiency with SystemVerilog and VHDL</li>
+                        <li>Understanding of ASIC design flow and verification methodologies</li>
+                        <li>Low-level programming in C and Assembly</li>
+                        <li>Hardware security and firmware analysis using tools like Ghidra</li>
+                        <li>Embedded systems development and debugging</li>
+                        <li>Strong foundation in computer architecture and digital design principles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resume" class="resume-section">
+        <div class="container">
+            <h2>Resume</h2>
+            <p>Download my full resume or view the embedded version below.</p>
+            <a href="resume.pdf" class="download-btn" download>Download Resume (PDF)</a>
+            
+            <div class="resume-embed">
+                <embed src="resume.pdf" type="application/pdf" width="100%" height="800px">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact</h2>
+            <div class="contact-info">
+                <p><strong>Email:</strong> <a href="mailto:aditya.chickmath@gmail.com">aditya.chickmath@gmail.com</a></p>
+                <p><strong>Phone:</strong> (612) 209-9325</p>
+                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/abchickmath" target="_blank">linkedin.com/in/abchickmath</a></p>
+                <p><strong>GitHub:</strong> <a href="https://github.com/achickmath" target="_blank">github.com/achickmath</a></p>
+                <p><strong>Location:</strong> Holly Springs, GA | Georgia Tech Campus</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Aditya Chickmath. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
